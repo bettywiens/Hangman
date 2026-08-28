@@ -23,6 +23,9 @@ namespace Hangman
                 ["RHYTHMUS"] = "Starkes, reguläres, wiederholtes Muster von einer Bewegung oder eines Geräusches",
                 ["KRYPTISCH"] = "Wenn etwas eine misteriöse oder obskure Bedeutung haben, ist es ...",
                 ["JAZZ"] = "Eine Mischung aus europäischen und westafrikanischen musikalischen Elementen",
+                ["KAKERLAKE"] = "Viele sagen, es könnte eine Atombombe überleben",
+                ["ANANAS"] = "Umstrittener Pizzabelag",
+                ["ANARCHIE"] = "Politisches System: Herschaftslosigkeit",
             };
 
             count = wordCollection.Count;

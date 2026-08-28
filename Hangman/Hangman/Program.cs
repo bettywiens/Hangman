@@ -19,6 +19,7 @@ namespace Hangman
 
             int count = words.count;
 
+            // Eine random Nummer zwischen eins und der Anzahl der Paare in dem Dictionary
             int randomNumber = GetRandomNumber(1, count);
 
             string word = Word.GetKey(collection, randomNumber);
@@ -26,6 +27,7 @@ namespace Hangman
 
             Game.StartGame(word, hint);
         }
+        // Gibt eine random Nummer zwischen zwei Zahlen zurück:
         public static int GetRandomNumber(int min, int max)
         {
             Random rnd = new Random();
