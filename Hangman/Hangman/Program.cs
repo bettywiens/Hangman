@@ -12,17 +12,17 @@ namespace Hangman
     internal class Program
     {
         public static void Main(string[] args)
-        {         
-            List<string> list = Words.GetWord(1);
+        {
+            Word words = new Word();
 
-            int listLength = int.Parse(list[2]);            
-            
-            int randomNumber = GetRandomNumber(1, listLength);           
-            
-            list = Words.GetWord(randomNumber);
+            Dictionary<string, string> collection = words.wordCollection; 
 
-            string word = list[0];
-            string hint = list[1];
+            int count = words.count;
+
+            int randomNumber = GetRandomNumber(1, count);
+
+            string word = Word.GetKey(collection, randomNumber);
+            string hint = Word.GetValue(collection, randomNumber);
 
             Game.StartGame(word, hint);
         }

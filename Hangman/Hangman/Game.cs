@@ -41,8 +41,12 @@ namespace Hangman
 
                 try
                 {
-                    Console.WriteLine($"\n{HangmanDrawing(mistakes)}\n");
-                    Console.WriteLine(PrintWord(crypticWord, guessedLetter, guessedLetterIndex)); 
+                    if (mistakes > 0)
+                    {
+                        Console.WriteLine($"\n{HangmanDrawing(mistakes)}");
+                    }
+
+                    Console.WriteLine($"\n{PrintWord(crypticWord, guessedLetter, guessedLetterIndex)}"); 
 
                     guessList = GetGuess(letters, lettercount);
                     if (guessList[0].Equals("true"))
@@ -156,34 +160,60 @@ namespace Hangman
 
         static List<string> GetGuess(char[] letters, int lettercount)
         {
-            int countOfLetter = 1;
-            List<string> list = new List<string> {"false"};
-            Console.Write("Your Guess: ");
-            string input = (Console.ReadLine()).ToUpper();
-            char guess = char.Parse(input);
+            bool running = true;
+            int multipleOfLetter = 1; // Wie oft ein Buchstabe vorkommt
+            List<string> list = new List<string> {"false"}; // Ob Buchstabe vorkommt mit "false" initialisiert
 
-            for (int i = 0; i < lettercount; i++)
+            
+            while (running)
             {
-                if (guess.Equals(letters[i]))
+                Console.Write("Buchstabe: ");
+
+                string input = (Console.ReadLine()).ToUpper();
+
+                try
                 {
-                    if (countOfLetter.Equals(1))
+                    char guess = char.Parse(input);
+
+                    if (Char.IsLetter(guess))
                     {
-                        list.RemoveAt(0);
-                        list.Add("true");
-                        list.Add(guess.ToString());
-                        list.Add(i.ToString());
-                        countOfLetter++;
+                        for (int i = 0; i < lettercount; i++)
+                        {
+                            if (guess.Equals(letters[i]))
+                            {
+                                if (multipleOfLetter.Equals(1)) // Wenn es das erste Vorkommen, des Buchstaben ist
+                                {
+                                    list.RemoveAt(0); // "false" wird entfernt
+                                    list.Add("true");
+                                    list.Add(guess.ToString()); // Buchstabe, der erraten wurde
+                                    list.Add(i.ToString()); // Stelle an die der Buchstabe gehört
+                                    multipleOfLetter++;
+                                }
+                                // Bei jedem weiteren Vorkommen muss nur der Buchstabe und dessen Index hinzugefügt werden:
+                                else
+                                {
+                                    list.Add(guess.ToString());
+                                    list.Add(i.ToString());
+                                }
+                            }
+                        }
+                        break;
                     }
                     else
-                    {                        
-                        list.Add(guess.ToString());
-                        list.Add(i.ToString());
+                    {
+                        Console.WriteLine("Bitte Buchstaben eingeben");
+                        continue;
                     }
                 }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Bitte einzelnen Buchstaben eingeben");
+                }
             }
-
             return list;
         }
+
+        // Fragt ob man erneut spielen möchte:
         static void PlayAgain()
         {
             bool running = true;
